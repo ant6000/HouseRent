@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/BackgroundScreen"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:contentDescription="@string/bg_"
+        app:srcCompat="@drawable/top_bg" />
+
+    <EditText
+        android:id="@+id/login_phone_num"
+        style="@style/textHintColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:autofillHints="phone"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/phone_24"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="@string/phone_"
+        android:inputType="phone"
+        android:padding="16dp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text"
+        android:layout_below="@+id/login_phone_num"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="32dp"
+        android:textSize="12sp"
+        android:text="@string/callortext"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continue_"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/continue_"
+        android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/_progressbar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continue_with_google"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/continue_with_facebook"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_button"
+        android:drawableLeft="@drawable/google_logo_svgrepo_com"
+        android:text="@string/continue_g"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continue_with_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_button"
+        android:drawableLeft="@drawable/facebook_2_svgrepo_com"
+        android:text="@string/continue_f"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

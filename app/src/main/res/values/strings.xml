@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">House Rent</string>
+    <string name="verificationPage">OTP Verification </string>
+    <string name="otpsentto">Enter the OTP sent to </string>
+    <string name="didntreceiveotp">Didn\'t receive the OTP? </string>
+    <string name="resend">RESEND OTP </string>
+    <string name="googleLogin">login with google</string>
+    <string name="bg_">BG</string>
+    <string name="callortext">We Will call or text you to confirm your number.</string>
+    <string name="phone_">Phone</string>
+    <string name="continue_">CONTINUE</string>
+    <string name="continue_g">CONTINUE WITH GOOGLE</string>
+    <string name="continue_f">CONTINUE WITH FACEBOOK</string>
+</resources>
