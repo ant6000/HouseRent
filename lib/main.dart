@@ -5,17 +5,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:house_rent/bindings/bindings.dart';
+import 'package:house_rent/core/helper/shared_pref.dart';
 import 'package:house_rent/firebase_options.dart';
 import 'package:house_rent/views/screens/details_page.dart';
 import 'package:house_rent/views/screens/login_page.dart';
 import 'package:house_rent/views/screens/main_page.dart';
 import 'package:house_rent/views/screens/registration_page.dart';
+import 'package:house_rent/views/screens/splash_screen.dart';
+import 'package:house_rent/views/screens/test_home_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await SharedPref.init();
   runApp(const MyApp());
 }
 
@@ -49,8 +53,9 @@ class MyApp extends StatelessWidget {
             initialRoute: '/',
             initialBinding: AuthBindings(),
             getPages: [
-              GetPage(name: '/', page: () => RegistrationPage()),
-              //GetPage(name: '/', page: () => const MainPage(),binding: CategoryBindings()),
+              GetPage(name: '/', page: () => const SplashScreen()),
+              GetPage(name: '/loginPage', page: () => const LoginPage()),
+              GetPage(name: '/homePage', page: () => const TestHomePage()),
               //GetPage(name: '/detailsPage', page: () => DetailsPage(houseModel: Get.arguments,)),
             ],
           );

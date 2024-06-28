@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:house_rent/controller/auth_controller.dart';
+import 'package:house_rent/controller/auth/auth_controller.dart';
 import 'package:house_rent/controller/baner_controller.dart';
 import 'package:house_rent/controller/best_for_you_controller.dart';
 import 'package:house_rent/controller/category_controller.dart';
@@ -19,6 +19,7 @@ class CategoryBindings extends Bindings {
 class AuthBindings extends Bindings {
   @override
   void dependencies() {
+    Get.put(AuthRepoImpl());
     Get.put(AuthController());
   }
   

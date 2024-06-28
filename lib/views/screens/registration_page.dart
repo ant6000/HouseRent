@@ -1,15 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:house_rent/controller/auth_controller.dart';
+import 'package:house_rent/controller/auth/auth_controller.dart';
 
-class RegistrationPage extends StatelessWidget {
-   RegistrationPage({super.key});
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
+
+  @override
+  State<RegistrationPage> createState() => _RegistrationPageState();
+}
+
+class _RegistrationPageState extends State<RegistrationPage> {
   final formKey = GlobalKey<FormState>();
+
   final nameController = TextEditingController();
+
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final authController = Get.find<AuthController>();
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,17 +40,34 @@ class RegistrationPage extends StatelessWidget {
             children: [
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
-                controller: emailController,
+                controller: nameController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please Enter your name';
+                  } else {
+                    return null;
+                  }
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.r)),
                     hintText: 'Enter your Name',
                     hintStyle: TextStyle(fontSize: 15.sp),
-                    prefixIcon: const Icon(Icons.mail)),
+                    prefixIcon: const Icon(Icons.abc)),
               ),
+              const SizedBox(height: 10),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
+                validator: (value) {
+                  if (value!.isEmpty ||
+                      !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                          .hasMatch(value)) {
+                    return 'Enter a valid email address';
+                  } else {
+                    return null;
+                  }
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.r)),
@@ -46,6 +81,13 @@ class RegistrationPage extends StatelessWidget {
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: passwordController,
+                validator: (value) {
+                  if (value!.isEmpty || value.length < 8) {
+                    return 'password should atleast 8 characher long';
+                  } else {
+                    return null;
+                  }
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.r)),
@@ -64,7 +106,7 @@ class RegistrationPage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     child: const Text(
-                      'Dont have account?',
+                      'Have account?',
                       style: TextStyle(color: Colors.green),
                     ),
                   ),
@@ -81,17 +123,29 @@ class RegistrationPage extends StatelessWidget {
               ),
               SizedBox(
                 width: double.infinity,
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        textStyle: TextStyle(fontSize: 15.sp)),
-                    onPressed: () {
-                      authController.userSignIn(
-                          emailController.text, passwordController.text);
-                    },
-                    child: const Text('Login')),
+                child: Obx(
+                  () => TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: authController.isLoading.value
+                              ? Colors.grey
+                              : Colors.blue,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          textStyle: TextStyle(fontSize: 15.sp)),
+                      onPressed: authController.isLoading.value
+                          ? null
+                          : () {
+                              if (formKey.currentState!.validate()) {
+                                authController.userSignUP(
+                                    nameController.text,
+                                    emailController.text,
+                                    passwordController.text);
+                              }
+                            },
+                      child: authController.isLoading.value
+                          ? const CircularProgressIndicator()
+                          : const Text('Sign up')),
+                ),
               )
             ],
           ),

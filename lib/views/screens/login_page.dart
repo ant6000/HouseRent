@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:house_rent/controller/auth_controller.dart';
+import 'package:house_rent/controller/auth/auth_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,6 +28,15 @@ class _LoginPageState extends State<LoginPage> {
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
+                validator: (value) {
+                  if (value!.isEmpty ||
+                      !RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                          .hasMatch(value)) {
+                    return 'Enter a valid email address';
+                  } else {
+                    return null;
+                  }
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.r)),
@@ -41,6 +50,13 @@ class _LoginPageState extends State<LoginPage> {
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: passwordController,
+                validator: (value) {
+                  if (value!.isEmpty || value.length < 8) {
+                    return 'password should atleast 8 characher long';
+                  } else {
+                    return null;
+                  }
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.r)),
@@ -76,17 +92,25 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(
                 width: double.infinity,
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        textStyle: TextStyle(fontSize: 15.sp)),
-                    onPressed: () {
-                      authController.userSignIn(
-                          emailController.text, passwordController.text);
-                    },
-                    child: const Text('Login')),
+                child: Obx(
+                  () => TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          textStyle: TextStyle(fontSize: 15.sp)),
+                      onPressed: authController.isLoading.value
+                          ? null
+                          : () {
+                              if (formKey.currentState!.validate()) {
+                                authController.userSignIn(emailController.text,
+                                    passwordController.text);
+                              }
+                            },
+                      child: authController.isLoading.value
+                          ? const CircularProgressIndicator()
+                          : const Text('Sign in')),
+                ),
               )
             ],
           ),
